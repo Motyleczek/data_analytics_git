@@ -1,15 +1,20 @@
 data {
     int<lower=0> N;
-    real,lower=0> heights[N];
+    vector[N] heights;
 }
 
 parameters {
-    real<lower=0> mu;
+    real<lower=0> mean;
     real<lower=0> sigma;
 }
 
 model {
-    //TODO - finish and change to appropriate dist
-    mu ~ normal(1,1);
-    sigma ~ normal(1,1);
+    mean ~ normal(154, 7.7);
+    sigma ~ normal(15, 3);
+    
+    heights ~ normal(mean, sigma);
+}
+
+generated quantities {
+    real h_hat = normal_rng(mean, sigma);
 }
